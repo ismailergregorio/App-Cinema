@@ -4,6 +4,7 @@ import DataCarousel from "@/src/components/dataCarousel";
 import Header from "@/src/components/header";
 import SectionTema from "@/src/components/sectionTemas";
 import api from "@/src/services/api";
+import apiFilmes from "@/src/services/apiFilmes";
 import { Categorias, Filme } from "@/src/types/types";
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useEffect, useState } from "react";
@@ -61,17 +62,17 @@ export default function HomePage() {
 
   async function categoriasFilmes() {
     try {
-      const resposta = await api.get("/genre/movie/list", {
+      const resposta = await apiFilmes.get("/categorias", {
         params: {
           language: "pt-BR",
         },
       });
 
-      const categoriasFinais = resposta.data.genres.filter((c: any) =>
+      const categoriasFinais = resposta.data.filter((c: any) =>
         listaCategorias.some((cc) => cc === c.id),
       );
 
-      const categoriasFinais2 = resposta.data.genres.filter((c: any) =>
+      const categoriasFinais2 = resposta.data.filter((c: any) =>
         listaCategorias2.some((cc) => cc === c.id),
       );
 

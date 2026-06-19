@@ -8,7 +8,7 @@ export interface  Filme {
   original_title: string;
   overview: string;
   popularity: number;
-  poster_path: string;
+  posterPath: string;
   release_date: string;
   softcore: boolean;
   title: string;

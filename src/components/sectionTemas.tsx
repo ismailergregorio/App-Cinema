@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 import api from "../services/api";
 import { Filme } from "../types/types";
 import Cartaz from "./cartaz";
+import apiFilmes from "../services/apiFilmes";
 
 export default function SectionTema({
   categoria,
@@ -15,13 +16,13 @@ export default function SectionTema({
 
   async function buscarFilmes() {
     try {
-      const response = await api.get("/discover/movie", {
+      const response = await apiFilmes.get(`/filmes/categoria/${categoria}`, {
         params: {
-          with_genres: categoria,
           language: "pt-BR",
         },
       });
-      setFilmes(response.data.results);
+      console.log(response.data);
+      setFilmes(response.data);
     } catch (erro) {
       console.log(erro);
     }

@@ -22,6 +22,7 @@ import { Filme } from "@/src/types/types";
 
 import Cartaz from "@/src/components/cartaz";
 import { Ionicons } from "@expo/vector-icons";
+import apiFilmes from "@/src/services/apiFilmes";
 
 type Categoria = {
   id: number;
@@ -43,28 +44,27 @@ export default function CategoriaPage() {
     async function carregarDados() {
       try {
         // Buscar categorias
-        const respostaCategorias = await api.get("/genre/movie/list", {
+        const respostaCategorias = await apiFilmes.get("/categorias", {
           params: {
             language: "pt-BR",
           },
         });
 
         // Encontrar categoria atual
-        const categoriaEncontrada = respostaCategorias.data.genres.find(
+        const categoriaEncontrada = respostaCategorias.data.find(
           (item: Categoria) => item.id === Number(categoriasId),
         );
 
         setCategoria(categoriaEncontrada);
 
         // Buscar filmes da categoria
-        const respostaFilmes = await api.get("/discover/movie", {
+        const respostaFilmes = await apiFilmes.get(`/filmes/categoria/${categoriasId}`, {
           params: {
-            with_genres: categoriasId,
             language: "pt-BR",
           },
         });
 
-        setFilmes(respostaFilmes.data.results);
+        setFilmes(respostaFilmes.data);
       } catch (error: any) {
         Alert.alert("Erro", error?.message || "Erro ao carregar dados.");
       } finally {

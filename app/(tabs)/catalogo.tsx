@@ -8,19 +8,20 @@ import api from "@/src/services/api";
 import { Categorias } from "@/src/types/types";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
+import apiFilmes from "@/src/services/apiFilmes";
 
 export default function Catalogo() {
   const [categorias, setCategorias] = useState<Categorias[]>([]);
 
   async function categoriasFilmes() {
     try {
-      const resposta = await api.get("/genre/movie/list", {
+      const resposta = await apiFilmes.get("/categorias", {
         params: {
           language: "pt-BR",
         },
       });
 
-      setCategorias(resposta.data.genres);
+      setCategorias(resposta.data);
     } catch (error: any) {
       Alert.alert(
         "Erro",

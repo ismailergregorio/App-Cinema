@@ -39,7 +39,7 @@ export default function Cartaz({ filme }: { filme: Filme }) {
 
         <ImageBackground
           source={{
-            uri: post_Filme(filme.poster_path),
+            uri: post_Filme(filme.posterPath),
           }}
           style={[
             styles.image,
