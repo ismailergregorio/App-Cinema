@@ -44,14 +44,9 @@ export default function HomePage() {
 
   async function lancamentosFilmes() {
     try {
-      const resposta = await api.get("/movie/now_playing", {
-        params: {
-          language: "pt-BR",
-          page: 1,
-        },
-      });
+      const resposta = await apiFilmes.get("/filmes/maisvistosuser");
 
-      setLancamentos(resposta.data.results);
+      setLancamentos(resposta.data);
     } catch (error: any) {
       Alert.alert(
         "Erro",

@@ -1,6 +1,7 @@
 import Cartaz from "@/src/components/cartaz";
 import Header from "@/src/components/header";
 import api from "@/src/services/api";
+import apiFilmes from "@/src/services/apiFilmes";
 import { Filme } from "@/src/types/types";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
@@ -13,13 +14,8 @@ export default function Search() {
   const [repostaPesquisa, setRespostaPesquisa] = useState<Filme[]>([]);
   async function buscarFilme(p?: string) {
     try {
-      const response = await api.get("/search/movie", {
-        params: {
-          query: p,
-          language: "pt-BR",
-        },
-      });
-      setRespostaPesquisa(response.data.results);
+      const response = await apiFilmes.get(`/filmes/search/${p}`);
+      setRespostaPesquisa(response.data);
     } catch (erro) {
       console.log(erro);
     }
@@ -27,14 +23,9 @@ export default function Search() {
   const [lancamentos, setLancamentos] = useState<Filme[]>([]);
   async function lancamentosFilmes() {
     try {
-      const resposta = await api.get("/movie/now_playing", {
-        params: {
-          language: "pt-BR",
-          page: 1,
-        },
-      });
+      const resposta = await apiFilmes.get("/filmes/maisVistos");
 
-      setLancamentos(resposta.data.results);
+      setLancamentos(resposta.data);
     } catch (error: any) {
       Alert.alert(
         "Erro",

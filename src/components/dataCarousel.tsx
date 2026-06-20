@@ -41,7 +41,7 @@ export default function DataCarousel({ filme }: Props) {
     <View style={styles.container}>
       {/* Banner */}
       <ImageBackground
-        source={{ uri: post_Filme(filme.backdrop_path) }}
+        source={{ uri: post_Filme(filme.backdropPath) }}
         style={styles.image}
         imageStyle={styles.imageBorder}
       >
@@ -65,7 +65,7 @@ export default function DataCarousel({ filme }: Props) {
           ]}
         >
           <ImageBackground
-            source={{ uri: post_Filme(filme.backdrop_path) }}
+            source={{ uri: post_Filme(filme.backdropPath) }}
             style={styles.modalBanner}
             imageStyle={styles.modalBannerImage}
           >

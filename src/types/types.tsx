@@ -1,7 +1,7 @@
 
 export interface  Filme {
   adult: boolean;
-  backdrop_path: string;
+  backdropPath: string;
   genre_ids: number[];
   id: number;
   original_language: string;

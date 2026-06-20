@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import {
   Dimensions,
@@ -14,25 +14,29 @@ import Carousel from "react-native-reanimated-carousel";
 
 import api from "../services/api";
 import { Filme } from "../types/types";
+import apiFilmes from "../services/apiFilmes";
+import { AuthContext } from "../contexts/userContexts";
 
 const { width } = Dimensions.get("window");
 
 export default function AnimarCard() {
   const [filmes, setFilmes] = useState<Filme[]>([]);
+  const { usuario, setUsuario } = useContext(AuthContext);
 
   async function buscaLancamentos() {
     try {
-      const resposta = await api.get("/discover/movie", {
+      const resposta = await apiFilmes.get(`/filmes/recomendados/${usuario?.id}`, {
         params: {
           language: "pt-BR",
           // sort_by: "primary_release_date.desc",
           // "primary_release_date.gte": primeiroDia,
           // "primary_release_date.lte": ultimoDiaMes,
-          page: 1,
+          // page: 1,
         },
       });
+      console.log("Resposta da API de filmes recomendados:", resposta.data);
 
-      setFilmes(resposta.data.results);
+      setFilmes(resposta.data);
     } catch (error) {
       console.log("Erro ao buscar lançamentos:", error);
     }
@@ -53,7 +57,7 @@ export default function AnimarCard() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.sectionTitle}>Lançamentos do Mês</Text>
+      <Text style={styles.sectionTitle}>Recomendados para Você por seus Favoritos</Text>
 
       <Carousel
         loop
@@ -75,9 +79,9 @@ export default function AnimarCard() {
           <View style={styles.card}>
             <Image
               source={{
-                uri: item.backdrop_path
-                  ? `https://image.tmdb.org/t/p/original${item.backdrop_path}`
-                  : `https://image.tmdb.org/t/p/w780${item.poster_path}`,
+                uri: item.backdropPath
+                  ? `https://image.tmdb.org/t/p/original${item.backdropPath}`
+                  : `https://image.tmdb.org/t/p/w780${item.posterPath}`,
               }}
               style={styles.image}
               resizeMode="cover"

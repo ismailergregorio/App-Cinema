@@ -78,7 +78,7 @@ export default function CategoriaPage() {
 
   async function BuscarFilme(id: string) {
     try {
-      const reposta = await api.get(`/movie/${id}`);
+      const reposta = await apiFilmes.get(`/filmes/${id}`);
       return reposta.data;
     } catch (error) {
       return;
